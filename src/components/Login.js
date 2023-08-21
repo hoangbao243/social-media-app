@@ -1,8 +1,62 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { Context } from '../context/myContext';
 
 
 export default function Login() {
+    const [listUser, setListUser] = useState([])
+    const navigate = useNavigate();
+    let found = false;
+    let id;
+
+    const {user,setUser} = useContext(Context)
+
+    
+
+    const getUser = async () => {
+		const response = await axios.get(
+			'http://localhost:3004/user',
+		);
+
+		if (response.status === 200) {
+			setListUser(response.data);
+		}
+	};
+
+	useEffect(() => {
+		getUser();
+        
+	}, []);
+
+    const handleChange = (e) =>{
+        setUser({...user, [e.target.name]: e.target.value,});
+    }
+
+    const handleSubmit = async (e) =>{
+        e.preventDefault()
+        listUser.forEach((item)=>{
+            if (item.username === user.username && item.password === user.password) {
+                setUser({...user, id: item.id})
+                // console.log(user.id)
+
+                return found = true;
+            }
+        })
+        if (found) {
+            // alert('Login successfull !!')
+            window.localStorage.setItem("username",user.username)
+            navigate('/');
+            
+            
+        }else{
+            alert('Username or password is wrong, please try again!!')
+            // console.log(listUser)
+            // console.log('ssssssssssssssssssssssssssssssssssssssssssssss')
+            // console.log(user)
+
+        }
+    };
   return (
     <div>
         <div className="w-full flex flex-row h-[76px] justify-center bg-white px-[140px]">
@@ -20,10 +74,10 @@ export default function Login() {
             <img src='./images/Abstraction.png' className='absolute top-[200px] left-0'></img>
             <div className='w-8/12 h-[700px] bg-white rounded-[22px]'>
                 <h1 className='font-normal text-[36px] w-32 h-11 mx-auto mt-[30px] mb-[100px]'>Sign in</h1>
-                <form class="relative ml-56">
-                    <input type="text" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" placeholder='Username'></input>
-                    <input type="text" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" placeholder='Password'></input>
-                    <button className='h-[70px] w-6/12 text-white bg-[#0C4195] rounded-[9px] mx-16 mt-8'>Log in</button>
+                <form class="relative ml-56" onSubmit={handleSubmit}>
+                    <input type="text" name='username' value={user.username} class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={handleChange} placeholder='Username'></input>
+                    <input type="password" name='password' value={user.password} class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={handleChange} placeholder='Password'></input>
+                    <button type='submit' className='h-[70px] w-6/12 text-white bg-[#0C4195] rounded-[9px] mx-16 mt-8'>Log in</button>
                 </form>
                 <div className='mt-4 flex flex-row gap-2 ml-56'>
                     <p>Don’t have an account? </p>

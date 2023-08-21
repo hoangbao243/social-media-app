@@ -10,6 +10,7 @@ module.exports = {
         'grey-rgba': 'rgba(246, 246, 246, 1)',
         'bg-grey': 'rgba(252, 253, 253, 1)',
         'text-blue': 'rgba(0, 172, 255, 1)',
+        'sky': 'rgba(0, 172, 255, 0.62)',
       },
     },
   },

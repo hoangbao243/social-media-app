@@ -1,12 +1,45 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Header from "./Header";
 import photo from "../svg/photo.svg";
 import send from "../svg/send.svg";
 import like from "../svg/like.svg"
 import comment from "../svg/comment.svg"
 import plus from "../svg/plus.svg"
+import { Context } from '../context/myContext';
+import axios from 'axios';
+import { useNavigate, Link } from "react-router-dom";
+
+
+
 
 function Home() {
+  const [currentUser, setCurrentUser] = useState([]);
+  const {user,setUser} = useContext(Context);
+  const navigate = useNavigate();
+
+  const getUser = async () => {
+		const response = await axios.get(
+			'http://localhost:3004/user',
+		);
+
+		if (response.status === 200) {
+      const targetUser2 = response.data.find(item => item.username === user.username)
+          setCurrentUser(targetUser2)
+		}
+	};
+
+	useEffect(() => {
+    if(user){
+      getUser();
+      // console.log(currentUser)
+    }
+	}, [user])
+
+  const handleLogout = () =>{
+    window.localStorage.removeItem('username');
+    navigate('/login')
+  }
+
   return (
     <div>
       <Header />
@@ -14,16 +47,32 @@ function Home() {
         <div class=" w-1/4 p-4">
           <div className="flex flex-col w-[278px] h-[168px] mt-4 ml-36 bg-bg-grey rounded-[18px]">
             <div className="flex flex-row gap-4">
-              <div className="rounded-[18px] w-[44px] h-[44px] bg-bg-grey ml-6 mt-4">
-                <img src="./images/avatar.png"></img>
-              </div>
-              <div className="mt-6 font-bold text-[17px]">
-                Bão Hoàng
-              </div>
+              
+              {
+                currentUser?.username ? (
+                  <div>
+                    <div className="rounded-[18px] w-[44px] h-[44px] bg-bg-grey ml-6 mt-4">
+                      <img className="rounded-[18px] w-[44px] h-[44px]" src={currentUser.image}></img>
+                    </div>
+                    <div className="mt-6 font-bold text-[17px]">
+                      {currentUser.username}
+                    </div>
+                    
+                  </div>
+
+                ) : (
+                  <Link to={'/login'}>
+                      <button className="py-3 px-8 rounded-md bg-[#FA8443] text-white">Sign up</button>
+                  </Link>
+                )
+              }
             </div>
             <div className="ml-6 mt-2 text-[blue]">
               My post: 10
             </div>
+            <button onClick={handleLogout} className="py-3 px-3 rounded-md bg-[#FA8443] text-white">
+                Logout
+            </button>
           </div>
           <div className="flex flex-col mt-4 w-[278px] min-h-[500px] ml-36 bg-bg-grey rounded-[18px]">
             <h1 className="text-[25px] mt-4 mx-auto">Category</h1>

@@ -9,6 +9,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Login from './components/Login';
+import Profile from './components/Profile';
+import { MyContext } from './context/myContext';
 
 const router = createBrowserRouter([
   {
@@ -23,13 +25,19 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
 ]);
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <MyContext>
+      <RouterProvider router={router} />
+    </MyContext>
   </React.StrictMode>
 );
 
