@@ -11,6 +11,7 @@ import {
 import Login from './components/Login';
 import Profile from './components/Profile';
 import { MyContext } from './context/myContext';
+import ListFriend from './components/ListFriend';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/friends",
+    element: <ListFriend />,
   },
 ]);
 

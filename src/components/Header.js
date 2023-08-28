@@ -20,10 +20,14 @@ export default function Header() {
       </div>
       <div className="flex flex-row gap-[65px] mt-6 mb-6">
         <div>
-          <img className="w-[28px] h-[28px]" src={homeSvg}></img>
+          <Link to={'/'}>
+            <img className="w-[28px] h-[28px]" src={homeSvg}></img>
+          </Link>
         </div>
         <div>
-          <img  className="w-[28px] h-[28px]" src={friendSvg}></img>
+          <Link to={'/friends'}>
+            <img  className="w-[28px] h-[28px]" src={friendSvg}></img>
+          </Link>
         </div>
         <div>
           <img  className="w-[28px] h-[28px]" src={notificationSvg}></img>
@@ -32,7 +36,9 @@ export default function Header() {
           <img  className="w-[28px] h-[28px]" src={chatSvg}></img>
         </div>
         <div>
-          <img  className="w-[28px] h-[28px]" src={profileSvg}></img>
+          <Link to={'/profile'}>
+            <img  className="w-[28px] h-[28px]" src={profileSvg}></img>
+          </Link>
         </div>
       </div>
       <div className="flex flex-row" >

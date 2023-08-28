@@ -67,6 +67,12 @@ export default function Register() {
                     password: pass,
                     email:  email,
                     image: baseImage,
+                    posts: [
+                        {
+                            id: 1,
+                          content: 'welcome',
+                        },
+                    ]
                 }
             );
             if (response.status === 201) {
@@ -103,7 +109,7 @@ export default function Register() {
 
 
 
-                    <input type="file" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={uploadImage} placeholder='Re-password'></input>
+                    <input type="file" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={uploadImage} ></input>
                     {
                         baseImage && (
                             <div>
