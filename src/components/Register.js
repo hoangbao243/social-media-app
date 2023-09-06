@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {storage} from '../firebase/firebase'
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 
 export default function Register() {
@@ -13,52 +15,66 @@ export default function Register() {
     const [rePass, setRePass] = useState('');
 
 
+    const [image, setImage] = useState(null); // state lưu ảnh sau khi chọn
+    const [progress, setProgress] = useState(0); // state hiển thị phần trăm tải ảnh lên store
+
+    const metadata = {
+        contentType: 'image/jpeg',
+    };
     
+    const handleChange = (e) => {
+		if (e.target.files[0]) {
+			setImage(e.target.files[0]);
+		}
+        // console.log(URL.createObjectURL(image))
+	};
 
-    // const onchangeFile1 = (event) =>{
-    //     const files = event.target.files;
-    //     setFile1(files[0])
+    const handleUpload = () =>{
+        const storageRef = ref(storage, `images/${image.name}`); // tạo địa chỉ chứa ảnh
 
-    //     console.log(files[0])
-    // }
+        const uploadTask = uploadBytesResumable(storageRef, image, metadata); // hàm upload ảnh
 
-
-    // const onUpload = async () =>{
-    //     const form = new FormData();
-    //     form.append('file', file1)
-    //     await axios.post('http://localhost:3004/user',form,{
-	// 		headers: {
-	// 			'Content-Type': 'multipart/form-data',
-				
-	// 		},
-	// 	})
-
-    // }
-    const [baseImage, setBaseImage] = useState("");
-
-    const uploadImage = async (e) =>{
-        const file = e.target.files[0];
-        const base64 = await convertBase64(file);
-        setBaseImage(base64)
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(progress);
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                        console.log('Upload is paused');
+                        break;
+                    case 'running':
+                        console.log('Upload is running');
+                        break;
+                }
+            },
+            (error) => {
+                console.log(error) // Xử lý trường hợp tải ảnh thất bại
+            },
+            () => {
+                // Xử lý trường hợp tải ảnh thành công
+                //  Lấy về đường link của ảnh vừa tải thành công
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    alert(
+                        'Upload image successfully, download URL: ' +
+                            downloadURL
+                    );
+                    setNewUser(downloadURL)
+                    // reset các trạng thái sau khi tải ảnh thành công
+                    setImage(null);
+                    setProgress(0);
+                    console.log('File available at', downloadURL);
+                });
+            }
+        );
     }
 
-    const convertBase64 = (file) =>{
-        return new Promise((resolve,reject)=>{
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-
-            fileReader.onload = () =>{
-                resolve(fileReader.result);
-            };
-
-            fileReader.onerror = (error) =>{
-                reject(error);
-            };
-        });
-    }
-
-    const setNewUser = async (e) => {
-        e.preventDefault();
+    const setNewUser = async (downloadURL) => {
+        // e.preventDefault();
 		if (pass === rePass) {
             const response = await axios.post(
                 'http://localhost:3004/user',
@@ -66,13 +82,7 @@ export default function Register() {
                     username: username,
                     password: pass,
                     email:  email,
-                    image: baseImage,
-                    posts: [
-                        {
-                            id: 1,
-                          content: 'welcome',
-                        },
-                    ]
+                    image: downloadURL
                 }
             );
             if (response.status === 201) {
@@ -109,19 +119,22 @@ export default function Register() {
 
 
 
-                    <input type="file" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={uploadImage} ></input>
+                    <input type="file" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={handleChange} ></input>
                     {
-                        baseImage && (
+                        image && (
                             <div>
-                                <img src={baseImage} className='w-40'>
+                                <img src={URL.createObjectURL(image)} style={{ maxWidth: '100%', maxHeight: '200px' }} className='w-40'>
 
                                 </img>
                             </div>
                         )
                     }
                     {/* <button type='button' onClick={onUpload}>+</button> */}
-                    <button className='h-[70px] w-6/12 text-white bg-[#0C4195] rounded-[9px] mx-16 mt-8' onClick={setNewUser} disabled={!username}>Register</button>
+                    <button className='h-[70px] w-6/12 text-white bg-[#0C4195] rounded-[9px] mx-16 mt-8' onClick={handleUpload} disabled={!username}>Register</button>
                 </div>
+                {progress > 0 && (
+					<progress value={progress} max="100" className="w-full" />
+				)}
                 <div className='mt-4 flex flex-row gap-2 ml-56'>
                     <p>Already  have an account?</p>
                     <Link className='text-[blue]' to={'/login'}>
