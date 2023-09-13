@@ -15,7 +15,16 @@ function MyContext({children}) {
 
     useEffect(()=>{
         const usernameStore = window.localStorage.getItem('username');
-        setUser({...user, username: usernameStore});
+        const admin = window.localStorage.getItem('admin')
+        if (admin && usernameStore) {
+          window.localStorage.removeItem('username');
+          setUser({...user, adminName: admin, username: admin});
+          window.location.reload();
+        }else if (admin) {
+          setUser({...user, adminName: admin, username: admin});
+        }else{
+          setUser({...user, username: usernameStore});
+        }
     },[])
   return (
     <Provider value={{user,setUser}}>

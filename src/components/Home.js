@@ -51,7 +51,7 @@ function Home() {
   
 
 	useEffect(() => {
-    if(user){
+    if(user && user.username){
       getUser();
       // console.log(currentUser)
     }
@@ -63,6 +63,7 @@ function Home() {
 
   const handleLogout = () =>{
     window.localStorage.removeItem('username');
+    window.localStorage.removeItem('admin');
     navigate('/login')
   }
 

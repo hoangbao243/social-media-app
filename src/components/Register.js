@@ -82,7 +82,8 @@ export default function Register() {
                     username: username,
                     password: pass,
                     email:  email,
-                    image: downloadURL
+                    image: downloadURL,
+                    role: "user",
                 }
             );
             if (response.status === 201) {

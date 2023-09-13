@@ -12,6 +12,9 @@ import Login from './components/Login';
 import Profile from './components/Profile';
 import { MyContext } from './context/myContext';
 import ListFriend from './components/ListFriend';
+import Chat from './components/Chat';
+import LoginAdmin from './admin/LoginAdmin';
+import Admin from './admin/Admin';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +36,18 @@ const router = createBrowserRouter([
   {
     path: "/friends",
     element: <ListFriend />,
+  },
+  {
+    path: "/chat",
+    element: <Chat />,
+  },
+  {
+    path: "/loginadmin",
+    element: <LoginAdmin />,
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
   },
 ]);
 

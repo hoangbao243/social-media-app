@@ -21,7 +21,7 @@ export default function RightBar() {
         setCurrentUser(targetUser2);
 
         if (targetUser2) {
-          const list = response.data.filter((item) => item.id !== targetUser2.id);
+          const list = response.data.filter((item) => item.id !== targetUser2.id && item.username !== "admin");
           setListUser(list);
         }
       }

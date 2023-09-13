@@ -33,7 +33,9 @@ export default function Header() {
           <img  className="w-[28px] h-[28px]" src={notificationSvg}></img>
         </div>
         <div>
-          <img  className="w-[28px] h-[28px]" src={chatSvg}></img>
+          <Link to={'/chat'}>
+            <img  className="w-[28px] h-[28px]" src={chatSvg}></img>
+          </Link>
         </div>
         <div>
           <Link to={'/profile'}>
