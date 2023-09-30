@@ -86,25 +86,25 @@ export default function ChatId () {
         {
           currentUser?.username ? (
                   <div className="flex flex-row w-full h-full bg-white">
-                    <div class=" w-1/4 p-4">
-                      <div className="flex flex-col w-[278px] h-[168px] mt-4 ml-36 bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200">
+                    <div class="w-1/4 p-4">
+                      <div className="flex flex-col w-8/12 h-[168px] mt-4 mx-auto bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200">
                         <div className="flex flex-row gap-4">
-                            <div className="flex flex-col w-[278px] h-[168px]">
-                            <div className="flex flex-row gap-4">
-                                <div className="rounded-[18px] w-[44px] h-[44px] bg-bg-grey ml-6 mt-4">
-                                <img className="rounded-full w-[44px] h-[44px]" src={currentUser.image}></img>
-                                </div>
-                                <div className="mt-6 font-bold text-[17px]">
-                                {currentUser.username}
-                                </div>
+                        <div className="flex flex-col w-full lg:h-[168px]">
+                          <div className="flex lg:flex-row sm:flex-col gap-4">
+                            <div className="rounded-[18px] w-[44px] h-[44px] bg-bg-grey ml-6 mt-4">
+                              <img className="rounded-full w-[44px] h-[44px] lg:block sm:hidden" src={currentUser.image}></img>
                             </div>
-                            <div className="ml-6 mt-2 mb-2 text-[blue]">
-                                
+                            <div className="mt-6 font-bold text-[17px] lg:block sm:hidden">
+                              {currentUser.username}
                             </div>
-                            <button onClick={handleLogout} className="py-3 px-3 w-full rounded-md bg-orange-300 text-black text-[20px]">
-                                Logout
-                            </button>
-                            </div>
+                          </div>
+                          <div className="ml-6 mt-2 mb-2 text-[blue]">
+                            
+                          </div>
+                          <button onClick={handleLogout} className="py-3 px-3 w-full rounded-md bg-orange-300 text-black text-[20px]">
+                              Logout
+                          </button>
+                          </div>
                         </div>
                       </div>
                       <LeftBar currentUser={currentUser} />

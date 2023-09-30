@@ -182,23 +182,25 @@ export default function FriendProfile() {
                     }
                         
                     </div>
-                    <div className="mx-2 font-bold text-[17px] mt-6">
-                        {item.user && item.user.username}
-                    </div>
+                        <div className="mx-2 font-bold text-[17px] mt-6">
+                            {item.user && item.user.username}
+                        </div>
                     </div>
                     <div className="ml-9 mt-4 min-h-[28px] w-10/12 mb-4">
-                    {item.content}
+                        {item.content}
                     </div>
-                    <div className="h-80 w-12/12 rounded-[18px] mx-4 mb-4">
-                    <img className="w-full max-h-80" src={item.contentImage}></img>
-                    </div>
+                    { item.contentImage &&
+                        (<div className="min-h-[15rem] w-12/12 rounded-[18px] mx-4 mb-4">
+                            <img className="w-full max-h-[40rem] rounded-xl" src={item.contentImage}></img>
+                        </div>)
+                    }
                     <div className="flex flex-row gap-4 ml-6 mb-4">
-                    <img className="w-8 h-8" src={like}></img>
-                    <img className="w-8 h-8" src={comment}></img>
+                        <img className="w-8 h-8" src={like}></img>
+                        <img className="w-8 h-8" src={comment}></img>
                     </div>
                     <div className="flex flex-row bg-grey-rgba min-h-[62px] w-12/12 mb-4 mx-4 rounded-[18px] px-2 py-2">
-                    <textarea name="postContent" className="min-h-[42px] w-11/12 px-4 py-4 rounded-[18px] bg-grey-rgba"/>
-                    <img src={plus} className="cursor-pointer ml-6"></img>
+                        <textarea name="postContent" className="min-h-[42px] w-11/12 px-4 py-4 rounded-[18px] bg-grey-rgba"/>
+                        <img src={plus} className="cursor-pointer ml-6"></img>
                     </div>
                 </div>
                 ))) : (

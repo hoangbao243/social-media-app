@@ -126,23 +126,21 @@ useEffect(()=>{
 },[listFriend2])
 
   return (
-    <div class="w-1/4 p-4 ">
-        <div className="flex flex-col mt-4 w-72 h-[750px] ml-6 bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200 overflow-auto">
+    <div className="w-1/4 p-4">
+        <div className="flex flex-col gap-4 mt-4 sm:w-full 2xl:w-8/12 h-[650px] mx-auto bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200 overflow-auto">
           <h1 className="text-[25px] mt-4 mx-auto font-medium">People you may know: </h1>
           {
-            dataFetched ? (dataFetched2 ?  (dataFetched3 ? (currentUser?.username && listFriendData1 || listFriendData2 ? (listRecomment && listRecomment.map((item)=>(
-              <div key={item.id}>
-                <div className="flex relative flex-row min-h-[5rem] rounded-full min-w-11/12 border border-gray-300 mx-2 my-2">
-                  <div className="items-center rounded-full min-w-[44px] h-[44px] ml-4 mt-4 my-2">
-                      <img className='w-[3rem] h-[3rem] rounded-full' src={item.image}></img>
+            dataFetched ? (dataFetched2 ?  (dataFetched3 ? (currentUser?.username && listFriendData1 || listFriendData2 ? (listRecomment && listRecomment.map((item,index)=>(
+              <div key={index} className="flex 2xl:flex-row sm:flex-col justify-between rounded-full min-h-[5rem] px-4 py-4 mx-auto my-2 sm:w-11/12 border border-gray">
+                  <div className='flex flex-row gap-5 sm:items-center sm:justify-center'>
+                      <Link className='flex flex-row gap-4' to={'/friendprofile/' + item.id}>
+                          <img className="rounded-full w-[3rem] h-[3rem]" src={item.image}></img>
+                      </Link>
+                      <p className='flex items-center text-[16px] font-medium'>{item.username}</p>
                   </div>
-                  <p className="font-medium text-[16px] my-auto mx-2">{item.username}</p>
-                  <div className="px-2 py-2 justify-center items-center absolute right-3 mt-4 bg-blue-200 rounded-full">
-                    <Link to={'/friendprofile/' + item.id}>
-                      connect
-                    </Link>
-                  </div>
-                </div>
+                  <a className='flex px-2 py-2 justify-center items-center bg-blue-200 rounded-full' href={'/friendprofile/' + item.id}>
+                      Connect
+                  </a>
               </div>
             ))) : (
               <Link to={'/login'}>

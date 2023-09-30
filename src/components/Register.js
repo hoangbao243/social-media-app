@@ -139,14 +139,14 @@ export default function Register() {
         </div>
         <div className=' relative flex mx-36 bg-[#0C4195] h-[700px] w-10/12 mt-20 justify-end rounded-r-[22px]'>
             <h1 className='font-bold text-[32px] text-white mt-16 ml-12'>Good Vibes and good life. JoinToday.</h1>
-            <img src='./images/Abstraction.png' className='absolute top-[200px] left-0'></img>
+            <img src='./images/Abstraction.png' className='absolute xl:block xl:top-[200px] left-0 md:hidden sm:hidden '></img>
             <div className='w-8/12 h-[700px] bg-white rounded-[22px]'>
                 <h1 className='font-normal text-[36px] w-64 h-11 mx-auto mt-4 mb-5'>Create Account</h1>
-                <div class="relative ml-56">
-                    <input type="text" pattern="[A-Za-z]{6,20}"  class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setUserName(e.target.value)} placeholder='Username'></input>
-                    <input type="text" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setEmail(e.target.value)} placeholder='Email Address'></input>
-                    <input type="password" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setPass(e.target.value)} placeholder='Password'></input>
-                    <input type="password" class="w-8/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setRePass(e.target.value)} placeholder='Re-password'></input>
+                <div class="relative xl:ml-56 md:ml-16 sm:ml-4">
+                    <input type="text" pattern="[A-Za-z]{6,20}"  className="xl:w-8/12 lg:w-10/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setUserName(e.target.value)} placeholder='Username'></input>
+                    <input type="text" class="xl:w-8/12 lg:w-10/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setEmail(e.target.value)} placeholder='Email Address'></input>
+                    <input type="password" class="xl:w-8/12 lg:w-10/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setPass(e.target.value)} placeholder='Password'></input>
+                    <input type="password" class="xl:w-8/12 lg:w-10/12 p-4 border-b-2 border-gray-300 focus:border-blue-500 outline-none mb-4" onChange={(e)=> setRePass(e.target.value)} placeholder='Re-password'></input>
 
 
 
@@ -169,7 +169,7 @@ export default function Register() {
                 {progress > 0 && (
 					<progress value={progress} max="100" className="w-full" />
 				)}
-                <div className='mt-4 flex flex-row gap-2 ml-56'>
+                <div className='mt-4 flex flex-row gap-2 xl:ml-56 md:ml-24'>
                     <p>Already  have an account?</p>
                     <Link className='text-[blue]' to={'/login'}>
                         Log in

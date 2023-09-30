@@ -301,18 +301,18 @@ function Home() {
     <div>
       <Header />
       <div class="flex min-h-screen">
-        <div class=" w-1/4 p-4">
-          <div className="flex flex-col w-[278px] h-[168px] mt-4 ml-36 bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200">
+        <div className=" w-1/4 p-4">
+          <div  className="flex flex-col 2xl:w-8/12 h-[168px] mt-4 mx-auto bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200">
             <div className="flex flex-row gap-4">
               
               {
                 currentUser?.username ? (
-                  <div className="flex flex-col w-[278px] h-[168px]">
-                    <div className="flex flex-row gap-4">
-                      <div className="rounded-[18px] w-[44px] h-[44px] bg-bg-grey ml-6 mt-4">
-                        <img className="rounded-[18px] w-[44px] h-[44px]" src={currentUser.image}></img>
+                  <div className="flex flex-col w-full lg:h-[168px]">
+                    <div className="flex lg:flex-row sm:flex-col gap-4 justify-center items-center">
+                      <div className="rounded-[18px] w-[44px] h-[44px] bg-bg-grey  mt-4">
+                        <img className="rounded-full w-[44px] h-[44px] " src={currentUser.image}></img>
                       </div>
-                      <div className="mt-6 font-bold text-[17px]">
+                      <div className="lg:mt-6 sm:mt-0 font-bold text-[17px] ">
                         {currentUser.username}
                       </div>
                     </div>
@@ -334,13 +334,13 @@ function Home() {
           </div>
           <LeftBar currentUser={currentUser} />
         </div>
-        <div class="flex-1 p-4 ">
+        <div class="flex-1 p-4 w-full">
           {
             currentUser?.username ? (
-              <div className="flex flex-col bg-white w-11/12 mx-auto min-h-[168px] rounded-[16px] mb-6 shadow-2xl shadow-blue-200">
+              <div className="flex flex-col bg-white w-full mx-auto min-h-[168px] rounded-[16px] mb-6 shadow-2xl shadow-blue-200">
                 <div className="flex">
                   <div className="rounded-[18px] w-[44px] h-[44px] bg-gray-200 ml-6 mt-4">
-                    <img className="rounded-[18px] w-[44px] h-[44px]" src={currentUser.image}></img>
+                    <img className="rounded-full w-[44px] h-[44px]" src={currentUser.image}></img>
                   </div>
                   <div className="flex flex-col w-full">
                     <textarea name="postContent" onChange={(e)=>{setContent(e.target.value)}} className="min-h-[103px] w-11/12 px-4 py-4"/>
@@ -369,11 +369,11 @@ function Home() {
           }>
           { 
             currentUserPost && currentUserPost.map((item, index)=>(
-              <div key={index} className=" flex flex-col bg-white w-11/12 mx-auto min-h-[168px]  rounded-[16px] mb-6 shadow-2xl shadow-blue-200">
+              <div key={index} className=" flex flex-col bg-white w-full mx-auto min-h-[168px]  rounded-[16px] mb-6 shadow-2xl shadow-blue-200">
                 <div className="flex flex-row gap-4">
                   <div className="rounded-[18px] w-[44px] h-[44px] bg-gray-200 ml-6 mt-4">
                   {
-                    item.user && <img className="rounded-[18px] w-[44px] h-[44px]" src={item.user.image}></img>
+                    item.user && <img className="rounded-full w-[44px] h-[44px]" src={item.user.image}></img>
                   }
                     
                   </div>

@@ -90,19 +90,21 @@ export default function LeftBar({currentUser}) {
         }
     },[listFriend2])
   return (
-    <div className="flex flex-col mt-4 w-72 h-[550px] ml-36 bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200 overflow-auto">
+    <div className="flex flex-col mt-4 2xl:w-8/12 h-[550px] mx-auto bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200 overflow-auto">
         <h1 className="text-[25px] mt-4 mx-auto">List Friend</h1>
         {
             dataFetched ? (user?.username ? listFriendData1 && listFriendData1.map((item, index)=>(
-                    <div key={index} className="flex flex-row relative gap-4 rounded-full min-h-[5rem] px-4 py-4 mx-auto my-2 w-11/12 border border-gray">
-                        <Link className='flex flex-row gap-4' to={'/friendprofile/' + item.id}>
-                        <img className="rounded-full w-[44px] h-[44px]" src={item.image}></img>
-                        </Link>
-                        <p className='flex items-center text-[16px] font-medium'>{item.username}</p>
-                        <a className='px-2 py-2 justify-center items-center absolute right-3  bg-blue-200 rounded-full' href={'/chatid/' + item.id}>
-                            Connect
-                        </a>
-                    </div>
+                <div key={index} className="flex 2xl:flex-row sm:flex-col justify-between rounded-full min-h-[5rem] px-4 py-4 mx-auto my-2 sm:w-11/12 border border-gray">
+                  <div className='flex flex-row gap-5 sm:items-center sm:justify-center'>
+                      <Link className='flex flex-row gap-4' to={'/friendprofile/' + item.id}>
+                          <img className="rounded-full w-[3rem] h-[3rem]" src={item.image}></img>
+                      </Link>
+                      <p className='flex items-center text-[16px] font-medium'>{item.username}</p>
+                  </div>
+                  <a className='flex px-2 py-2 justify-center items-center bg-blue-200 rounded-full' href={'/friendprofile/' + item.id}>
+                      Message
+                  </a>
+              </div>
             )) : (
                 <Link to={'/login'}>
                     <button className="py-3 px-8 rounded-md bg-[#FA8443] text-white ml-20 mt-5">Sign up</button>
@@ -113,13 +115,15 @@ export default function LeftBar({currentUser}) {
         }
         {
             dataFetched ? (user?.username ? listFriendData2 && listFriendData2.map((item, index)=>(
-                <div key={index} className="flex flex-row relative gap-4 rounded-full min-h-[5rem] px-4 py-4 mx-auto my-2 w-11/12 border border-gray">
-                    <Link className='flex flex-row gap-4' to={'/friendprofile/' + item.id}>
-                    <img className="rounded-full w-[44px] h-[44px]" src={item.image}></img>
-                    </Link>
-                    <p className='flex items-center text-[16px] font-medium'>{item.username}</p>
-                    <a className='px-2 py-2 justify-center items-center absolute right-3  bg-blue-200 rounded-full' href={'/chatid/' + item.id}>
-                        Connect
+                <div key={index} className="flex 2xl:flex-row sm:flex-col justify-between gap-4 rounded-full min-h-[5rem] px-4 py-4 mx-auto my-2 w-11/12 border border-gray">
+                    <div className='flex flex-row gap-5'>
+                        <Link className='flex flex-row gap-4' to={'/friendprofile/' + item.id}>
+                            <img className="rounded-full w-[3rem] h-[3rem]" src={item.image}></img>
+                        </Link>
+                        <p className='flex items-center text-[16px] font-medium'>{item.username}</p>
+                    </div>
+                    <a className='flex px-2 py-2 justify-center items-center bg-blue-200 rounded-full' href={'/chatid/' + item.id}>
+                        Message
                     </a>
                 </div>
             )) : (

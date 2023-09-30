@@ -67,7 +67,7 @@ export default function Admin() {
       const response = await axios.patch('http://localhost:3004/user/' + id,{
       role: 'banned',
       });
-      window.location.reload();
+      getListUser();
     }
   }
 
@@ -76,21 +76,21 @@ export default function Admin() {
       const response = await axios.patch('http://localhost:3004/user/' + id,{
       role: 'user',
       });
-      window.location.reload();
+      getListUser();
     }
   }
 
   const onDeletePost = async (id) =>{
     if (window.confirm('Want delete?')) {
       await axios.delete(`http://localhost:3004/posts/${id}`);
-      window.location.reload();
+      getListUser();
     }
   }
 
   const onDeleteUser = async (id) =>{
     if (window.confirm('Want delete?')) {
       await axios.delete(`http://localhost:3004/user/${id}`);
-      window.location.reload();
+      getListUser();
     }
   }
 
@@ -143,7 +143,7 @@ export default function Admin() {
                         {item.user.username}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        {item.user.id}
+                        {item.userId}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button onClick={()=>onDeletePost(item.id)} className="border  border-gray-300 px-1 py-1 rounded-[10px] mt-2 bg-yellow-100 shadow-xl shadow-orange-200 hover:bg-orange-100">Remove</button>

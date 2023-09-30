@@ -71,17 +71,17 @@ export default function Profile () {
           currentUser?.username ? (
                   <div className="flex flex-row w-full h-screen bg-white">
                     <div class=" w-1/4 p-4">
-                      <div className="flex flex-col w-[278px] h-[168px] mt-4 ml-36 bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200">
+                      <div className="flex flex-col w-8/12 h-[168px] mt-4 mx-auto bg-bg-grey rounded-[18px] shadow-2xl shadow-blue-200">
                         <div className="flex flex-row gap-4">
                           
                           {
                             currentUser?.username ? (
-                              <div className="flex flex-col w-[278px] h-[168px]">
-                                <div className="flex flex-row gap-4">
+                              <div className="flex flex-col w-full lg:h-[168px]">
+                                <div className="flex lg:flex-row sm:flex-col gap-4">
                                   <div className="rounded-[18px] w-[44px] h-[44px] bg-bg-grey ml-6 mt-4">
-                                    <img className="rounded-[18px] w-[44px] h-[44px]" src={currentUser.image}></img>
+                                    <img className="rounded-full w-[44px] h-[44px] lg:block sm:hidden" src={currentUser.image}></img>
                                   </div>
-                                  <div className="mt-6 font-bold text-[17px]">
+                                  <div className="mt-6 font-bold text-[17px] lg:block sm:hidden">
                                     {currentUser.username}
                                   </div>
                                 </div>
