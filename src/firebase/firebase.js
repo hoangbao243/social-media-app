@@ -1,9 +1,12 @@
 
 import { initializeApp } from "firebase/app";
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 import { getAnalytics } from "firebase/analytics";
-import { getStorage } from 'firebase/storage'
+import { getStorage } from 'firebase/storage';
+import firebase from 'firebase/compat/app'
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyAyFg1OLYFVUWi3eNTvqwNu2VZVluDtecw",
   authDomain: "social-media-23985.firebaseapp.com",
   projectId: "social-media-23985",
@@ -14,7 +17,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
+export const storage = getStorage(app)
+
+export const firestore = firebase.firestore();
+export const auth = firebase.auth();
+
 // const analytics = getAnalytics(app);
 
-export const storage = getStorage(app)

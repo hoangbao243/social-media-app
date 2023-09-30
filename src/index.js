@@ -15,6 +15,12 @@ import ListFriend from './components/ListFriend';
 import Chat from './components/Chat';
 import LoginAdmin from './admin/LoginAdmin';
 import Admin from './admin/Admin';
+import FriendProfile from './components/FriendProfile';
+import Status from './components/Status';
+import UpdateProfile from './components/UpdateProfile';
+import Search from './components/Search';
+import UpdateStatus from './components/UpdateStatus';
+import ChatId from './components/ChatMessage';
 
 const router = createBrowserRouter([
   {
@@ -42,12 +48,36 @@ const router = createBrowserRouter([
     element: <Chat />,
   },
   {
+    path: "/chatid/:id",
+    element: <ChatId />,
+  },
+  {
     path: "/loginadmin",
     element: <LoginAdmin />,
   },
   {
     path: "/admin",
     element: <Admin />,
+  },
+  {
+    path: "/friendprofile/:id",
+    element: <FriendProfile />,
+  },
+  {
+    path: "/status/:id",
+    element: <Status />,
+  },
+  {
+    path: "/updateprofile/:id",
+    element: <UpdateProfile />,
+  },
+  {
+    path: "/updatestatus/:id",
+    element: <UpdateStatus />,
+  },
+  {
+    path: "/search/:stringParam",
+    element: <Search />,
   },
 ]);
 

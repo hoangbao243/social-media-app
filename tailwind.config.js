@@ -11,7 +11,7 @@ module.exports = {
         'bg-grey': 'rgba(252, 253, 253, 1)',
         'text-blue': 'rgba(0, 172, 255, 1)',
         'sky': 'rgba(0, 172, 255, 0.62)',
-      },
+      }
     },
   },
   plugins: [],

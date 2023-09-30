@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const Context = createContext();
 
@@ -12,6 +13,7 @@ const initialState = {
 
 function MyContext({children}) {
     const [user, setUser] = useState(initialState);
+    
 
     useEffect(()=>{
         const usernameStore = window.localStorage.getItem('username');

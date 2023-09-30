@@ -12,7 +12,9 @@ export default function Admin() {
   const [activeSection, setActiveSection] = useState('Dashboard');
   const category = ['Users','Posts']
   const [listUser,setListUser] = useState([]);
-  const [currentUserPost, setCurrentUserPost] = useState([]);
+  const [currentUserPost, setCurrentUserPost] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
 
 
@@ -31,11 +33,8 @@ export default function Admin() {
       if (response.status === 200) {
         const targetUser2 = response.data.find((item) => item.username === user.adminName);
         setCurrentAdmin(targetUser2);
-
-        if (targetUser2) {
-          const list = response.data.filter((item) => item.id !== targetUser2.id && item.username !== "admin");
-          setListUser(list);
-        }
+        const list = response.data.filter((item) => item.username !== "admin");
+        setListUser(list);
       }
       const responsePost = await axios.get(
         'http://localhost:3004/posts',
@@ -46,18 +45,40 @@ export default function Admin() {
         // console.log(targetPost)
         setCurrentUserPost(targetPost)
       }
+      setDataLoaded(true);
     } catch (error) {
       console.log(error);
+      setError(error);
+      setDataLoaded(true);
     }
   }
 
-  console.log(user);
+  
   useEffect(() => {
-    if(user && user.username){
+    if(user){
       getListUser();
+      // window.location.reload();
       // console.log(currentUser)
     }
-	}, [user])
+	},[user])
+  // console.log(currentAdmin);
+  const handleBan = async (id) =>{
+    if (window.confirm('Want ban?')) {
+      const response = await axios.patch('http://localhost:3004/user/' + id,{
+      role: 'banned',
+      });
+      window.location.reload();
+    }
+  }
+
+  const handleUnBan = async (id) =>{
+    if (window.confirm('Want unban?')) {
+      const response = await axios.patch('http://localhost:3004/user/' + id,{
+      role: 'user',
+      });
+      window.location.reload();
+    }
+  }
 
   const onDeletePost = async (id) =>{
     if (window.confirm('Want delete?')) {
@@ -73,6 +94,7 @@ export default function Admin() {
     }
   }
 
+  // console.log(user);
   const renderContent = () =>{
     switch (activeSection) {
       case 'Posts':
@@ -80,7 +102,7 @@ export default function Admin() {
           <div>
             <h2 className='text-2xl font-semibold'>Posts</h2>
             <div className="p-6">
-              <table className="min-w-full divide-y divide-gray-200">
+              <table className="min-w-full divide-y divide-gray-200 ">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -113,7 +135,9 @@ export default function Admin() {
                         {item.content}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <img className="rounded-[18px] w-[70px] h-[70px]" src={item.contentImage}></img>
+                        <a href={item.contentImage}>
+                          <img className="rounded-[18px] w-[70px] h-[70px]" src={item.contentImage}></img>
+                        </a>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {item.user.username}
@@ -122,7 +146,7 @@ export default function Admin() {
                         {item.user.id}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <button onClick={()=>onDeletePost(item.id)} className="border border-black px-1 py-1 rounded-[10px] mt-2 ml-2 bg-red-200">Remove</button>
+                        <button onClick={()=>onDeletePost(item.id)} className="border  border-gray-300 px-1 py-1 rounded-[10px] mt-2 bg-yellow-100 shadow-xl shadow-orange-200 hover:bg-orange-100">Remove</button>
                       </td>
                     </tr>
                   ))}
@@ -178,14 +202,22 @@ export default function Admin() {
                         {item.email}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <img className="rounded-[18px] w-[70px] h-[70px]" src={item.image}></img>
+                        <a href={item.image}>
+                          <img className="rounded-[18px] w-[70px] h-[70px]" src={item.image}></img>
+                        </a>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {item.role}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <button onClick={()=>onDeleteUser(item.id)}  className="border border-black px-1 py-1 rounded-[10px] mt-2 bg-yellow-200">Remove</button>
-                        <button className="border border-black px-1 py-1 rounded-[10px] mt-2 ml-2 bg-red-200">Ban</button>
+                        <button onClick={()=>onDeleteUser(item.id)}  className="border  border-gray-300 px-1 py-1 rounded-[10px] mt-2 bg-yellow-100 shadow-xl shadow-orange-200 hover:bg-orange-100">Remove</button>
+                        {
+                          item.role === 'banned' ? (
+                            <button onClick={()=>handleUnBan(item.id)} className="border border-gray-300 px-1 py-1 rounded-[10px] mt-2 ml-2 bg-red-100 shadow-xl shadow-red-200 hover:bg-red-200">Unban</button>
+                          ) : (
+                            <button onClick={()=>handleBan(item.id)} className="border border-gray-300 px-1 py-1 rounded-[10px] mt-2 ml-2 bg-red-100 shadow-xl shadow-red-200 hover:bg-red-200">Ban</button>
+                          )
+                        }
                       </td>
                     </tr>
                   ))}
@@ -203,32 +235,21 @@ export default function Admin() {
         );
     }
   }
+  
   return (
     <div className="w-full h-[76px] justify-between bg-gray-200">
       {
-        user?.username ? (
+        user?.username === 'admin' ? (
           <div className='flex flex-col w-full'>
-            <div className="w-full flex flex-row h-[76px] justify-between  px-[140px]">
+            <div className="w-full flex flex-row w-full h-[76px] justify-between  px-[140px]">
               <div className=" my-2">
                 <Link to={'/admin'} className="flex flex-row gap-3">
                   <div onClick={() => handleSectionClick('s')} className='text-[40px] font-bold'>Admin</div>
                 </Link>
               </div>
-              <div className="flex flex-row gap-[65px] mt-6 mb-6">
-                <div>
-                  1
-                </div>
-                <div>
-                  2
-                </div>
-                <div>
-                  3
-                </div>
-              </div>
               <div className="flex flex-row" >
-                <img className="my-4" src="./images/Line1.png"></img>
                 <div className="flex flex-row gap-4 w-[64px] h-[44px] bg-gray-200 ml-6 mt-4">
-                  <img className="rounded-[36px] w-[64px] h-[44px]" src='https://firebasestorage.googleapis.com/v0/b/social-media-23985.appspot.com/o/images%2F1.jpg?alt=media&token=d44dce5c-ee7f-43fe-b9cc-6a338080933f'></img>
+                  <img className="h-[44px] w-[64px] rounded-lg" src='https://firebasestorage.googleapis.com/v0/b/social-media-23985.appspot.com/o/images%2F1.jpg?alt=media&token=d44dce5c-ee7f-43fe-b9cc-6a338080933f'></img>
                   <p className='mt-2'>{user.adminName}</p>
                   <button onClick={handleLogout} className="rounded-md px-2 py-2 bg-orange-300 text-black text-[16px]">
                     Logout
@@ -245,7 +266,7 @@ export default function Admin() {
                       <li 
                       key={index}
                       className={`${activeSection === `${item}` ? 'text-black bg-blue-200' : 'text-black bg-gray-300'}
-                      hover:text-blue-600 mb-2 px-4 py-4 font-bold rounded-2xl cursor-pointer`}
+                      hover:text-blue-600 mb-2 px-4 py-4 font-bold rounded-2xl cursor-pointer shadow-lg shadow-blue-300`}
                       onClick={() => handleSectionClick(`${item}`)}
                       >
                         <a
@@ -262,7 +283,20 @@ export default function Admin() {
               <div className='container flex flex-row'>
                 {/* Content */}
                 <div className="ml-4 p-8">
-                  {renderContent()}
+                  {
+                    dataLoaded ? (
+                      error ? (
+                        // Render an error message if there was an error
+                        <div>Error: {error.message}</div>
+                      ) : (
+                        // Render the content once data has been loaded
+                        renderContent()
+                      )  
+                    ) : (
+                      // Optionally, you can render a loading indicator while data is being fetched
+                      <div>Loading...</div>
+                    )
+                  }
                 </div>
               </div>
             </div>
