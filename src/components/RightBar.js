@@ -71,7 +71,15 @@ export default function RightBar({currentUser}) {
       if (listFriendData2) {
           // console.log('4');
           if (listRecomment) {
-            setListRecomment(listRecomment.filter((item1)=>!listFriendData2.some(item2=>item2.id=== item1.id)))
+            setListRecomment(listRecomment.filter((item1)=>{
+              if (item1) {
+                return !listFriendData2.some(item2=>{
+                  if (item2) {
+                    return item2.id=== item1.id;
+                  }
+                });
+              }
+            }))
             setDataFetched3(true);
           }
       }
@@ -97,7 +105,7 @@ useEffect(()=>{
             if (listFriend1) {
                 fetchUserDataForArrayIdUser(listFriend1)
                 .then(userDataArray => {
-                // console.log(userDataArray);
+                // console.log(listFriend1);
                 setListFriendData1(userDataArray)
                 // userDataArray contains the resolved user data for each idUser
                 })
