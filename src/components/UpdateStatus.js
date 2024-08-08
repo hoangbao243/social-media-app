@@ -26,11 +26,11 @@ export default function UpdateStatus() {
 
     
     const getDataUser = async () =>{
-        const response = await axios.get('http://localhost:3004/user/')
+        const response = await axios.get('https://vtcsyp-5555.csb.app/user/')
         if (response.status === 200) {
             setCurrentUser(response.data.filter(item=>item.username === user.username));
         }
-        const response1 = await axios.get('http://localhost:3004/posts/' + id.id)
+        const response1 = await axios.get('https://vtcsyp-5555.csb.app/posts/' + id.id)
         if (response1.status === 200) {
             setPost(response1.data);
             console.log(response1.data);
@@ -58,7 +58,7 @@ export default function UpdateStatus() {
             image: updateImageUrl,
         }
         const response = await axios.patch(
-            'http://localhost:3004/posts/' + id.id, dataUpdate);
+            'https://vtcsyp-5555.csb.app/posts/' + id.id, dataUpdate);
         if (response.status === 200 || response.status === 201) {
             // alert('Update successfully');
         }
@@ -79,7 +79,7 @@ export default function UpdateStatus() {
                             numLike: post.numLike,
                         }
                         const response = await axios.put(
-                            'http://localhost:3004/posts/' + id.id, dataUpdate);
+                            'https://vtcsyp-5555.csb.app/posts/' + id.id, dataUpdate);
                         if (response.status === 200 || response.status === 201) {
                             // alert('Update successfully');
                         }
@@ -95,7 +95,7 @@ export default function UpdateStatus() {
                             numLike: post.numLike,
                         }
                         const response = await axios.put(
-                            'http://localhost:3004/posts/' + id.id, dataUpdate);
+                            'https://vtcsyp-5555.csb.app/posts/' + id.id, dataUpdate);
                         if (response.status === 200 || response.status === 201) {
                             // alert('Update successfully');
                         }

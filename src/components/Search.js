@@ -20,7 +20,7 @@ export default function Search() {
     // console.log(searchInput.stringParam);
     
     const getUserData = async () =>{
-        const response = await axios.get('http://localhost:3004/user');
+        const response = await axios.get('https://vtcsyp-5555.csb.app/user');
         if (response.status === 200) {
             const curUser = response.data.find(item => item.username === user.username);
             setCurrentUser(curUser);

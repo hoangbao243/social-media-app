@@ -17,7 +17,7 @@ export default function LeftBar({currentUser}) {
 
 
     const getListAddFriend = async () =>{
-        const response = await axios.get('http://localhost:3004/friend')
+        const response = await axios.get('https://vtcsyp-5555.csb.app/friend')
           if (response.status === 200) {
             const firstData = response.data.filter(item => item.idFriend === currentUser.id && item.statusFriend === 2);
 
@@ -29,7 +29,7 @@ export default function LeftBar({currentUser}) {
 // console.log(list);
     const getFriendData = async (id) =>{
         try {
-            const response4 = await axios.get('http://localhost:3004/user/' + id);
+            const response4 = await axios.get('https://vtcsyp-5555.csb.app/user/' + id);
             return response4.data;
         } catch (error) {
             console.log(error);

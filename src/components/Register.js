@@ -109,7 +109,7 @@ export default function Register() {
     },[error])
     const setNewUser = async (downloadURL) => {
             const response = await axios.post(
-                'http://localhost:3004/user',
+                'https://vtcsyp-5555.csb.app/user',
                 {
                     username: username,
                     password: pass,

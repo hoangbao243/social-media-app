@@ -16,14 +16,14 @@ export default function FriendProfile() {
     const navigate = useNavigate();
 
     const getUserData = async () =>{
-        const response = await axios.get('http://localhost:3004/user');
+        const response = await axios.get('https://vtcsyp-5555.csb.app/user');
         if (response.status === 200) {
             const curUser = response.data.find(item => item.username === user.username);
             setCurrentUser(curUser);
         }
     }
     const getListAddFriend = async () =>{
-      const response1 = await axios.get('http://localhost:3004/friend')
+      const response1 = await axios.get('https://vtcsyp-5555.csb.app/friend')
         if (response1.status === 200) {
           setFriendList(response1.data.filter(item => item.idFriend === currentUser.id && item.statusFriend === 1));
         }
@@ -31,7 +31,7 @@ export default function FriendProfile() {
 
     const getFriendData = async (id) =>{
       try {
-        const response4 = await axios.get('http://localhost:3004/user/' + id);
+        const response4 = await axios.get('https://vtcsyp-5555.csb.app/user/' + id);
         return response4.data;
       } catch (error) {
         console.log(error);
@@ -50,7 +50,7 @@ export default function FriendProfile() {
         try {
           friendList.filter(item => item.idFriend === currentUser.id && item.idUser === id && item.statusFriend === 1);
 
-          const response5 = await axios.patch('http://localhost:3004/friend/' + friendList[0].id, {
+          const response5 = await axios.patch('https://vtcsyp-5555.csb.app/friend/' + friendList[0].id, {
             statusFriend: 2,
           })
           if (response5.status === 200) {
@@ -67,9 +67,9 @@ export default function FriendProfile() {
         try {
           if (window.confirm('Bạn muốn từ chối kết bạn?')) {
             friendList.filter(item => item.idFriend === currentUser.id && item.idUser === id && item.statusFriend === 1);
-            const response6 = await axios.delete('http://localhost:3004/friend/' + friendList[0].id)
+            const response6 = await axios.delete('https://vtcsyp-5555.csb.app/friend/' + friendList[0].id)
             if (response6.status === 200) {
-              const response1 = await axios.get('http://localhost:3004/friend')
+              const response1 = await axios.get('https://vtcsyp-5555.csb.app/friend')
               if (response1.status === 200) {
                 setFriendList(response1.data.filter(item => item.idFriend === currentUser.id && item.statusFriend === 1));
               }

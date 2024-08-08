@@ -42,7 +42,7 @@ function Home() {
 
   const getUser = async () => {
 		const response = await axios.get(
-			'http://localhost:3004/user',
+			'https://vtcsyp-5555.csb.app/user',
 		);
 
 		if (response.status === 200) {
@@ -52,7 +52,7 @@ function Home() {
 	};
   const getPost = async () =>{
     const responsePost = await axios.get(
-			'http://localhost:3004/posts',
+			'https://vtcsyp-5555.csb.app/posts',
 		);
 
 		if (responsePost.status === 200) {
@@ -64,7 +64,7 @@ function Home() {
   console.log(currentUserPost.length);
 
   const fetchMoreData = async () =>{
-    const responsePost = await axios.get('http://localhost:3004/posts');
+    const responsePost = await axios.get('https://vtcsyp-5555.csb.app/posts');
     
     if (responsePost.status === 200) {
       const data = responsePost.data.reverse();
@@ -150,7 +150,7 @@ function Home() {
             image: currentUser.image,
           }
           const response = await axios.post(
-            `http://localhost:3004/posts`,
+            `https://vtcsyp-5555.csb.app/posts`,
             {
               content: content,
               contentImage: urlImage,
@@ -220,7 +220,7 @@ function Home() {
         }
         console.log('1');
         const response = await axios.post(
-          `http://localhost:3004/posts`,
+          `https://vtcsyp-5555.csb.app/posts`,
           {
             content: content,
             userId: currentUser.id,
@@ -233,7 +233,7 @@ function Home() {
       );
       if (response.status === 201) {
         const responsePost = await axios.get(
-          'http://localhost:3004/posts',
+          'https://vtcsyp-5555.csb.app/posts',
         );
     
         if (responsePost.status === 200) {
@@ -250,7 +250,7 @@ function Home() {
 
 
   const handleComment = async (item) =>{
-    const response = await axios.patch('http://localhost:3004/posts/' + item.id,{
+    const response = await axios.patch('https://vtcsyp-5555.csb.app/posts/' + item.id,{
       comment: [...item.comment, {commentContent: commentPost, time: currentDate, userComment: currentUser}],///sai, get list posts => bo vao comment
       });
     if (response.status == 200) {
@@ -260,7 +260,7 @@ function Home() {
   }
 
   const handleLike = async (id) =>{
-    const response = await axios.get('http://localhost:3004/posts/' + id);
+    const response = await axios.get('https://vtcsyp-5555.csb.app/posts/' + id);
     const dataLike = response.data;
     if (dataLike.like.some(item=>{return item.idLikeUser === currentUser.id})) {
       const newDataLike = response.data.like.filter(item=>item.idLikeUser !== currentUser.id);
@@ -274,25 +274,25 @@ function Home() {
         id: dataLike.id,
         numLike: dataLike.like.length-1,
       }
-      await axios.put('http://localhost:3004/posts/' + id, dataPost);
-      const response3 = await axios.get('http://localhost:3004/posts/');
+      await axios.put('https://vtcsyp-5555.csb.app/posts/' + id, dataPost);
+      const response3 = await axios.get('https://vtcsyp-5555.csb.app/posts/');
       setCurrentUserPost(response3.data.reverse())
       // console.log('1');
       // console.log(newDataLike);
     }else{
-      const response = await axios.get('http://localhost:3004/posts/' + id);
+      const response = await axios.get('https://vtcsyp-5555.csb.app/posts/' + id);
       const dataLike = response.data.like;
       const dataLikeUser = {
         username: currentUser.username,
         idLikeUser: currentUser.id,
         image: currentUser.image,
       }
-      const response1 = await axios.patch('http://localhost:3004/posts/' + id, {
+      const response1 = await axios.patch('https://vtcsyp-5555.csb.app/posts/' + id, {
         like: [...dataLike, dataLikeUser],
         numLike: dataLike.length+1,
       });
       // console.log(response1.data);
-      const response3 = await axios.get('http://localhost:3004/posts/');
+      const response3 = await axios.get('https://vtcsyp-5555.csb.app/posts/');
       setCurrentUserPost(response3.data.reverse())
     }
   }

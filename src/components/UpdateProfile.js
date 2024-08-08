@@ -25,7 +25,7 @@ export default function UpdateProfile() {
 
     
     const getDataUser = async () =>{
-        const response = await axios.get('http://localhost:3004/user/' + id.id)
+        const response = await axios.get('https://vtcsyp-5555.csb.app/user/' + id.id)
         setCurrentUser(response.data);
         setFullName(response.data.username)
         setImage(response.data.image)
@@ -60,7 +60,7 @@ export default function UpdateProfile() {
             if (checkBirthday(birthday)) {
                 if (window.confirm('Want change information?')) {
                     const response = await axios.patch(
-                        'http://localhost:3004/user/' + currentUser.id, dataUpdate);
+                        'https://vtcsyp-5555.csb.app/user/' + currentUser.id, dataUpdate);
                     if (response.status === 200 || response.status === 201) {
                         // alert('Update successfully');
                     }
@@ -120,7 +120,7 @@ export default function UpdateProfile() {
     const handleChangePass = async () => {
         if (oldPass === currentUser.password) {
             if (newPass === reNewPass) {
-                const response = await axios.patch('http://localhost:3004/user/' + currentUser.id,{
+                const response = await axios.patch('https://vtcsyp-5555.csb.app/user/' + currentUser.id,{
                     password: newPass,
                 })
                 if (response.status === 200) {

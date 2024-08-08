@@ -22,7 +22,7 @@ export default function Status() {
 
     const getPost = async () => {
         const responsePost = await axios.get(
-                'http://localhost:3004/posts',
+                'https://vtcsyp-5555.csb.app/posts',
             );
 
             if (responsePost.status === 200) {
@@ -34,7 +34,7 @@ export default function Status() {
     
     const getUser = async () => {
 		const response = await axios.get(
-			'http://localhost:3004/user',
+			'https://vtcsyp-5555.csb.app/user',
 		);
 
 		if (response.status === 200) {
@@ -44,17 +44,17 @@ export default function Status() {
 	};
     // console.log(currentUser);
     const handleComment = async () =>{
-        const response = await axios.patch('http://localhost:3004/posts/' + idPost.id,{
+        const response = await axios.patch('https://vtcsyp-5555.csb.app/posts/' + idPost.id,{
             comment: [...post.comment, {commentContent: commentPost, time: currentDate, userComment: currentUser}],///sai, get list posts => bo vao comment
             });
         if (response.status == 200) {
             setCommentPost('');
-            const responsePost = await axios.get('http://localhost:3004/posts/' + idPost.id);
+            const responsePost = await axios.get('https://vtcsyp-5555.csb.app/posts/' + idPost.id);
             setPost(responsePost.data)
         }
     }
     const handleLike = async (id) =>{
-        const response = await axios.get('http://localhost:3004/posts/' + id);
+        const response = await axios.get('https://vtcsyp-5555.csb.app/posts/' + id);
         const dataLike = response.data;
         if (dataLike.like.some(item=>{return item.idLikeUser === currentUser.id})) {
           const newDataLike = response.data.like.filter(item=>item.idLikeUser !== currentUser.id);
@@ -68,25 +68,25 @@ export default function Status() {
             id: dataLike.id,
             numLike: dataLike.like.length-1,
           }
-          await axios.put('http://localhost:3004/posts/' + id, dataPost);
-          const responsePost = await axios.get('http://localhost:3004/posts/' + idPost.id);
+          await axios.put('https://vtcsyp-5555.csb.app/posts/' + id, dataPost);
+          const responsePost = await axios.get('https://vtcsyp-5555.csb.app/posts/' + idPost.id);
             setPost(responsePost.data)
           // console.log('1');
           // console.log(newDataLike);
         }else{
-          const response = await axios.get('http://localhost:3004/posts/' + id);
+          const response = await axios.get('https://vtcsyp-5555.csb.app/posts/' + id);
           const dataLike = response.data.like;
           const dataLikeUser = {
             username: currentUser.username,
             idLikeUser: currentUser.id,
             image: currentUser.image,
           }
-          const response1 = await axios.patch('http://localhost:3004/posts/' + id, {
+          const response1 = await axios.patch('https://vtcsyp-5555.csb.app/posts/' + id, {
             like: [...dataLike, dataLikeUser],
             numLike: dataLike.length+1,
           });
           // console.log(response1.data);
-          const responsePost = await axios.get('http://localhost:3004/posts/' + idPost.id);
+          const responsePost = await axios.get('https://vtcsyp-5555.csb.app/posts/' + idPost.id);
             setPost(responsePost.data)
         }
       }

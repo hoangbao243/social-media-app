@@ -19,7 +19,7 @@ export default function FriendProfile() {
     const navigate = useNavigate();
 
     const getFriendData = async () =>{
-        const response = await axios.get('http://localhost:3004/user');
+        const response = await axios.get('https://vtcsyp-5555.csb.app/user');
         if (response.status === 200) {
             const dataFriend = response.data.find(item=>item.id == id.id);
             // console.log(dataFriend);
@@ -27,7 +27,7 @@ export default function FriendProfile() {
             const curUser = response.data.find(item => item.username === user.username)
             setCurrentUser(curUser);
             // console.log(curUser);
-            const response3 = await axios.get('http://localhost:3004/friend');
+            const response3 = await axios.get('https://vtcsyp-5555.csb.app/friend');
 
             if (response3.status === 200) {
                     // console.log('1');
@@ -52,7 +52,7 @@ export default function FriendProfile() {
             // }
             
             const responsePost = await axios.get(
-            'http://localhost:3004/posts',
+            'https://vtcsyp-5555.csb.app/posts',
             );
             if (responsePost.status === 200) {
                 const friendPost = responsePost.data.filter(item=>item.userId == id.id);
@@ -67,14 +67,14 @@ export default function FriendProfile() {
         //         friendData: {username: currentUser.username, email: currentUser.email, image: currentUser.image, id: currentUser.id},
         //         stateFriend: 2,
         //     });
-        //     const response = await axios.patch('http://localhost:3004/user/' + dataUserFriend.id, dataUserFriend);
+        //     const response = await axios.patch('https://vtcsyp-5555.csb.app/user/' + dataUserFriend.id, dataUserFriend);
 
         //     currentUser.friend.push({
         //         friendData: {username: dataUserFriend.username, email: dataUserFriend.email, image: dataUserFriend.image, id: dataUserFriend.id},
         //         stateFriend: 1,
         //     });
         //     if (response.status === 200) {
-        //         const response1 = await axios.patch('http://localhost:3004/user/' + currentUser.id, currentUser);
+        //         const response1 = await axios.patch('https://vtcsyp-5555.csb.app/user/' + currentUser.id, currentUser);
         //         if (response1.status === 200) {
         //             setTextFriend('Hủy lời mời')
         //         }
@@ -85,14 +85,14 @@ export default function FriendProfile() {
         //         if (dataUserFriend.friend[userIndex].stateFriend === 1 || dataUserFriend.friend[userIndex].stateFriend === 2) {
         //             dataUserFriend.friend.splice(userIndex,1);
         //         }
-        //         const response2 = await axios.patch('http://localhost:3004/user/' + dataUserFriend.id, dataUserFriend);
+        //         const response2 = await axios.patch('https://vtcsyp-5555.csb.app/user/' + dataUserFriend.id, dataUserFriend);
         //         if (response2.status === 200) {
         //             const friendIndex = currentUser.friend.findIndex(friend=>friend.friendData.id === dataUserFriend.id)
         //             if (friendIndex !== -1) {
         //                 if (currentUser.friend[friendIndex].stateFriend === 1 || currentUser.friend[friendIndex].stateFriend === 2) {
         //                     currentUser.friend.splice(friendIndex,1);
         //                 }
-        //                 const response3 = await axios.patch('http://localhost:3004/user/' + currentUser.id, currentUser);
+        //                 const response3 = await axios.patch('https://vtcsyp-5555.csb.app/user/' + currentUser.id, currentUser);
         //                 if (response3.status === 200) {
         //                     setTextFriend('Thêm bạn bè')
         //                 }
@@ -108,17 +108,17 @@ export default function FriendProfile() {
                 idFriend: dataUserFriend.id,
                 statusFriend: 1,
             }
-            const response = await axios.post('http://localhost:3004/friend/', dataFriendRelationship);
+            const response = await axios.post('https://vtcsyp-5555.csb.app/friend/', dataFriendRelationship);
             if (response.status === 201) {
                 setTextFriend('Hủy lời mời')
             }
         }else if (textFriend === 'Hủy lời mời') {
-            const response1 = await axios.get('http://localhost:3004/friend');
+            const response1 = await axios.get('https://vtcsyp-5555.csb.app/friend');
             if (response1.status === 200) {
                 const idFriendRelationShip = response1.data.find(item => {return item.idFriend === dataUserFriend.id}).id;
                 console.log(idFriendRelationShip);
                 if (window.confirm('Bạn muốn hủy lời mời?')) {
-                    const response2 = await axios.delete('http://localhost:3004/friend/' + idFriendRelationShip)
+                    const response2 = await axios.delete('https://vtcsyp-5555.csb.app/friend/' + idFriendRelationShip)
                     if (response2.status === 200) {
                         setTextFriend('Thêm bạn bè');
                     }
@@ -126,12 +126,12 @@ export default function FriendProfile() {
                 
             }
         }else if (textFriend === 'Hủy kết bạn') {
-            const response2 = await axios.get('http://localhost:3004/friend');
+            const response2 = await axios.get('https://vtcsyp-5555.csb.app/friend');
             if (response2.status === 200) {
                 const idFriendRelationShip = response2.data.find(item => {return item.idFriend === dataUserFriend.id && item.idUser === currentUser.id || item.idFriend === currentUser.id && item.idUser === dataUserFriend.id}).id;
                 console.log(idFriendRelationShip);
                 if (window.confirm('Bạn muốn hủy kết bạn?')) {
-                    const response2 = await axios.delete('http://localhost:3004/friend/' + idFriendRelationShip)
+                    const response2 = await axios.delete('https://vtcsyp-5555.csb.app/friend/' + idFriendRelationShip)
                     if (response2.status === 200) {
                         setTextFriend('Thêm bạn bè');
                     }

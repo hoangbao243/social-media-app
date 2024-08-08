@@ -50,14 +50,14 @@ export default function ChatId () {
   const getUser = async () => {
     try {
       const response = await axios.get(
-        'http://localhost:3004/user',
+        'https://vtcsyp-5555.csb.app/user',
       );
       if (response.status === 200) {
         const targetUser2 = response.data.find(item => item.username === user.username);
         setCurrentUser(targetUser2)
         const dataFriend = response.data.find(item=>item.id === +id.id);
         setDataUserFriend(dataFriend);
-        const response1 = await axios.get('http://localhost:3004/friend')
+        const response1 = await axios.get('https://vtcsyp-5555.csb.app/friend')
         if (response1.status === 200) {
             setFriendId(response1.data.find(item=>item.idUser === dataFriend.id && item.idFriend === targetUser2.id || item.idUser === targetUser2.id && item.idFriend === dataFriend.id).id)
         }

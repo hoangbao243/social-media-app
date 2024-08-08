@@ -20,11 +20,11 @@ export default function RightBar({currentUser}) {
   const [listRecomment, setListRecomment] = useState(null)
 
   const getListAddFriend = async () =>{
-    const response = await axios.get('http://localhost:3004/user')
+    const response = await axios.get('https://vtcsyp-5555.csb.app/user')
     if (response.status === 200) {
       setListUser(response.data.filter(item =>item.username !== 'admin' && item.id !== currentUser.id ))
     }
-    const response1 = await axios.get('http://localhost:3004/friend')
+    const response1 = await axios.get('https://vtcsyp-5555.csb.app/friend')
       if (response.status === 200) {
         const firstData = response1.data.filter(item => item.idFriend === currentUser.id && item.statusFriend === 2);
         const secondData = response1.data.filter(item => item.idUser === currentUser.id && item.statusFriend === 2);
@@ -36,7 +36,7 @@ export default function RightBar({currentUser}) {
 // console.log(listRecomment);
   const getFriendData = async (id) =>{
     try {
-        const response4 = await axios.get('http://localhost:3004/user/' + id);
+        const response4 = await axios.get('https://vtcsyp-5555.csb.app/user/' + id);
         return response4.data;
     } catch (error) {
         console.log(error);

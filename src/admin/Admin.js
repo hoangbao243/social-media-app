@@ -28,7 +28,7 @@ export default function Admin() {
   
   const getListUser = async () =>{
     try {
-      const response = await axios.get('http://localhost:3004/user');
+      const response = await axios.get('https://vtcsyp-5555.csb.app/user');
 
       if (response.status === 200) {
         const targetUser2 = response.data.find((item) => item.username === user.adminName);
@@ -37,7 +37,7 @@ export default function Admin() {
         setListUser(list);
       }
       const responsePost = await axios.get(
-        'http://localhost:3004/posts',
+        'https://vtcsyp-5555.csb.app/posts',
       );
   
       if (responsePost.status === 200) {
@@ -64,7 +64,7 @@ export default function Admin() {
   // console.log(currentAdmin);
   const handleBan = async (id) =>{
     if (window.confirm('Want ban?')) {
-      const response = await axios.patch('http://localhost:3004/user/' + id,{
+      const response = await axios.patch('https://vtcsyp-5555.csb.app/user/' + id,{
       role: 'banned',
       });
       getListUser();
@@ -73,7 +73,7 @@ export default function Admin() {
 
   const handleUnBan = async (id) =>{
     if (window.confirm('Want unban?')) {
-      const response = await axios.patch('http://localhost:3004/user/' + id,{
+      const response = await axios.patch('https://vtcsyp-5555.csb.app/user/' + id,{
       role: 'user',
       });
       getListUser();
@@ -82,14 +82,14 @@ export default function Admin() {
 
   const onDeletePost = async (id) =>{
     if (window.confirm('Want delete?')) {
-      await axios.delete(`http://localhost:3004/posts/${id}`);
+      await axios.delete(`https://vtcsyp-5555.csb.app/posts/${id}`);
       getListUser();
     }
   }
 
   const onDeleteUser = async (id) =>{
     if (window.confirm('Want delete?')) {
-      await axios.delete(`http://localhost:3004/user/${id}`);
+      await axios.delete(`https://vtcsyp-5555.csb.app/user/${id}`);
       getListUser();
     }
   }
