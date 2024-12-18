@@ -42,6 +42,11 @@ export default function Header({off}) {
             <img  className="lg:w-[28px] lg:h-[28px] sm:w-9 sm:h-9 max-w-none" src={profileSvg}></img>
           </Link>
         </div>
+        <div>
+          <Link to={'/demo/5'}>
+            <img  className="lg:w-[28px] lg:h-[28px] sm:w-9 sm:h-9 max-w-none" src={profileSvg}></img>
+          </Link>
+        </div>
       </div>
       <div className="flex flex-row" >
         {

@@ -21,6 +21,7 @@ import UpdateProfile from './components/UpdateProfile';
 import Search from './components/Search';
 import UpdateStatus from './components/UpdateStatus';
 import ChatId from './components/ChatMessage';
+import Demo from './components/Demo';
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
   {
     path: "/search/:stringParam",
     element: <Search />,
+  },
+  {
+    path: "/demo/:id",
+    element: <Demo />,
   },
 ]);
 
