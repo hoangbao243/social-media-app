@@ -1,0 +1,23 @@
+1. Cài node 1.1.12 - node version 20.9.0
+	- nvm: https://github.com/coreybutler/nvm-windows?tab=readme-ov-file
+	- node: nvm install 20.9.0   => nvm use 20.9.0
+2. Cài SQL Sever 2022
+	- i-Express: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+	- sever: Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
+3. Jira
+	- https://ittriviet.atlassian.net
+4. connect db
+	- npm install mssql msnodesqlv8
+5. git clone 'link'
+	- npm i
+	- npm i react react-dom
+	- npm start
+6. lấy dữ liệu từ API 
+	- lấy id từ params: const { id } = useParams();
+	- axios: https://www.youtube.com/watch?v=_zeOSnVHI2I
+7. .map()
+	- https://viblo.asia/p/su-dung-map-filter-va-reduce-trong-javascript-YWOZrxm75Q0
+8. JSX
+	- https://viblo.asia/p/tong-quan-ve-jsx-Qbq5QqBL5D8
+9. toán tử javascript
+	- https://200lab.io/blog/toan-tu-trong-javascript/?srsltid=AfmBOoqTYckv85PwpPbXH8bEOV09ic3qgwLEtd_397MdEpAdaIaqrBd4
