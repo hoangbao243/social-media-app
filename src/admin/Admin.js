@@ -10,12 +10,14 @@ export default function Admin() {
   const {user,setUser} = useContext(Context);
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('Dashboard');
-  const category = ['Users','Posts']
+  const category = ['Users','Posts','DemoUsers']
   const [listUser,setListUser] = useState([]);
   const [currentUserPost, setCurrentUserPost] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [error, setError] = useState(null);
-
+//
+  const [demoListUser,setDemoListUser] = useState();
+//
 
 
   const handleLogout = () =>{
@@ -25,6 +27,21 @@ export default function Admin() {
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
+  //
+  const getDemoListUser = async () => {
+    const setListData = await axios.get('https://vtcsyp-5555.csb.app/user')
+    if (setListData.status === 200) {
+        const ListFriend = setListData.data.filter((item)=> item.role !== "admin");
+        setDemoListUser(ListFriend);
+    }
+    console.log(demoListUser)
+  }
+  //
+ useEffect(() => {
+         getDemoListUser(); 
+     },[])
+ //
+    //
   
   const getListUser = async () =>{
     try {
@@ -62,6 +79,7 @@ export default function Admin() {
     }
 	},[user])
   // console.log(currentAdmin);
+  
   const handleBan = async (id) =>{
     if (window.confirm('Want ban?')) {
       const response = await axios.patch('https://vtcsyp-5555.csb.app/user/' + id,{
@@ -225,7 +243,61 @@ export default function Admin() {
               </table>
             </div>
           </div>
-        );    
+        );
+        //
+        case 'DemoUsers':
+          return (
+            <div>
+              <h2 className='text-2xl font-semibold'>DemoUsers</h2>
+              <div className='p-6'>
+                <table className='min-w-full divide-y divide-gray-200'>
+                  <thead className='bg-gray-50'>
+                    <tr>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Id</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Username</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Password</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Email</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Image</th>
+                      <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                        Role</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {demoListUser && demoListUser.map((item, index) => (
+                    <tr key={index}>
+                      <td className='px-6 py-4 bg-white'>
+                        {item.id}
+                      </td>
+                      <td className='px-6 py-4 bg-white'>
+                        {item.username}
+                      </td>
+                      <td className='px-6 py-4 bg-white'>
+                        {item.password}
+                      </td>
+                      <td className='px-6 py-4 bg-white'>
+                        {item.email}
+                      </td>
+                      <td className='px-6 py-4 bg-white'>
+                        <a href={item.image}>
+                          <img className='rounded-[18px] w-[70px] h-[70px]' src={item.image}></img>
+                        </a>
+                      </td>
+                      <td className='px-6 py-4 bg-white'>
+                        {item.role}
+                      </td>
+                    </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+          //
       default:
         return (
           <div>
